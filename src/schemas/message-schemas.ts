@@ -9,7 +9,7 @@ const baseMessageSchema = z.object({
     }),
     pushName: z.string(),
     instanceId: z.string(),
-    // Não incluímos messageType ou message aqui, pois variam
+    messageType: z.string(),
   }),
   date_time: z.string(),
 });
@@ -37,6 +37,7 @@ export const messageStickerSchema = baseMessageSchema.extend({
 });
 
 // Inferir os tipos TypeScript
+export type BaseMessage = z.infer<typeof baseMessageSchema>;
 export type ConversationMessage = z.infer<typeof messageUpsertSchema>;
 export type StickerMessage = z.infer<typeof messageStickerSchema>;
 

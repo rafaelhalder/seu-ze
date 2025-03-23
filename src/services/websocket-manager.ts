@@ -9,36 +9,36 @@ interface WebSocketConfig{
 class WebSocketManager {
   private sockets: Map<string,Socket> = new Map();
 
-  public addSocket(name:string, config:WebSocketConfig): void{
-    if(this.sockets.has(name)){
+  public addSocket(name: string, config: WebSocketConfig): void {
+    if(this.sockets.has(name)) {
       console.warn(`Socket with name ${name} already exists. Replacing it.`);
-      // this.sockets.get(name)?.disconnect();
-      // this.sockets.delete(name);
-      return;
+      const existingSocket = this.sockets.get(name);
+      if (existingSocket && existingSocket.connected) {
+        existingSocket.disconnect();
+      }
+      this.sockets.delete(name);
     }
-    const socket = io(config.url,config.options || {})
+    
+    const socket = io(config.url, config.options || {});
 
-    socket.on("connect",() => {
+    socket.on("connect", () => {
       console.log(`Socket ${name} connected`);
-    })
+    });
 
-    socket.on("disconnect",() => {
+    socket.on("disconnect", () => {
       console.log(`Socket ${name} disconnected`);
-    })
-
-    socket.on("connect_error",(error) => {
-      console.error(`Socket ${name} connection error:`, error);
-    })
-
-    this.sockets.set(name,socket)
-
-    if(config.alwaysOn){
-      socket.on("disconnect",() => {
-        console.log(`Socket ${name} disconnected`);
+      
+      if(config.alwaysOn) {
         socket.connect();
-        console.log(`Socket ${name} reconnected`);
-      })
-    }
+        console.log(`Attempting to reconnect socket ${name}`);
+      }
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error(`Socket ${name} connection error:`, error);
+    });
+
+    this.sockets.set(name, socket);
   }
 
   public getSocket(name:string): Socket | undefined {

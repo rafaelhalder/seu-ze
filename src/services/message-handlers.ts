@@ -7,16 +7,16 @@ import {
   StickerMessage
 } from "@/schemas/message-schemas";
 
-// Interface para os handlers
-interface MessageHandler<T> {
-  schema: z.ZodType<T>;
+// Interface para os handlers mais específica
+interface MessageHandler<T, S extends z.ZodType<T>> {
+  schema: S;
   process: (data: T) => Promise<void>;
 }
 
 // Tipo que mapeia messageType para handler
 type MessageHandlers = {
-  conversation: MessageHandler<ConversationMessage>;
-  stickerMessage: MessageHandler<StickerMessage>;
+  conversation: MessageHandler<ConversationMessage, typeof messageUpsertSchema>;
+  stickerMessage: MessageHandler<StickerMessage, typeof messageStickerSchema>;
 };
 
 // Implementação dos handlers

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { usersRoutes } from "./user-routes";
-import { messageUpsertRoutes } from "./message-upsert-routes";
+import { messageSenderRoutes } from "./message-sender-routes";
 const routes = Router();
 routes.use('/users', usersRoutes);
-routes.use('/messages-upsert', messageUpsertRoutes);
+routes.use('/messages-sender', messageSenderRoutes);
 export {routes}
