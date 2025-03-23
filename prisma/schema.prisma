@@ -19,7 +19,7 @@ enum Role {
 }
 
 model User {
-  id        String         @id @default(cuid())
+  id        String         @id @default(uuid())
   name      String?
   email     String         @unique
   number    String         @unique
@@ -33,7 +33,7 @@ model User {
 }
 
 model LogsWhatsApp {
-  id          String   @id @default(cuid())
+  id          String   @id @default(uuid())
   userId      String   @map("user_id")
   action      String
   messageUser String   @map("message_user")
@@ -45,4 +45,18 @@ model LogsWhatsApp {
   user        User     @relation(fields: [userId], references: [id])
 
   @@map("logs_whatsapp")
+}
+
+model Message {
+  id           String   @id @default(uuid())
+  eventType    String
+  remoteJid    String
+  pushName     String
+  conversation String   @db.Text
+  dateTime     DateTime
+  createdAt    DateTime @default(now())
+  messageType  String
+  answered     Boolean  @default(false)
+
+  @@map("message")
 }

@@ -1,7 +1,7 @@
 import {Request,Response} from "express";
 import {z} from "zod";
 import {prisma} from "@/database/prisma";
-import { AppError } from "@/utils/AppError";
+import { AppError } from "@/utils/app-error";
 import {hash} from "bcrypt"
 
 class UsersController {
@@ -32,13 +32,13 @@ class UsersController {
           throw new AppError("Number already in use")
       }
 
-        const hashedPasssword = await hash(password,8);
+        const hashedPassword = await hash(password,8);
 
         await prisma.user.create({
             data: {
                 name,
                 email,
-                password: hashedPasssword,
+                password: hashedPassword,
                 number
             }
         })

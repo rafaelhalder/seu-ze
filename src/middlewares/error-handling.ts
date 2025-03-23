@@ -1,4 +1,4 @@
-import {AppError} from "@/utils/AppError"
+import {AppError} from "@/utils/app-error"
 import type { ErrorRequestHandler } from "express"
 import {ZodError} from "zod"
 
@@ -11,7 +11,7 @@ export const errorHandling:ErrorRequestHandler = (
   }
 
   if(error instanceof ZodError){
-    response.status(400).json({message: "validatiron error", issues: error.format()})
+    response.status(400).json({message: "validation error", issues: error.format()})
     return
   }
 
