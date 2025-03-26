@@ -6,6 +6,7 @@ const baseMessageSchema = z.object({
   data: z.object({
     key: z.object({
       remoteJid: z.string(),
+      id: z.string(),
     }),
     pushName: z.string(),
     instanceId: z.string(),

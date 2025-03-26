@@ -28,6 +28,7 @@ export const messageHandlers: MessageHandlers = {
       // Salvar no banco de dados
       await prisma.message.create({
         data: {
+          id: data.data.key.id,
           eventType: data.event,
           remoteJid: data.data.key.remoteJid,
           pushName: data.data.pushName,
@@ -45,6 +46,7 @@ export const messageHandlers: MessageHandlers = {
       // Salvar no banco de dados
       await prisma.message.create({
         data: {
+          id: data.data.key.id,
           eventType: data.event,
           remoteJid: data.data.key.remoteJid,
           pushName: data.data.pushName,

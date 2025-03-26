@@ -8,6 +8,8 @@ const envSchema = z.object({
   INSTANCE:z.string(),
   URL_SEND_MESSAGE_WHATSAPP:z.string(),
   APIKEY:z.string(),
+  OPENAI_API_KEY:z.string(),
+  DEEPSEEK_API_KEY:z.string(),
 })
 
 export const env = envSchema.parse(process.env);

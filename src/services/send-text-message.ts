@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { env } from '@/env';
+import { prisma } from '@/database/prisma';
 class MessageSender{
   private apiKey: string;
   private apiUrl: string;
@@ -25,6 +26,8 @@ class MessageSender{
           'apikey': this.apiKey,
         },
       });
+
+
       console.log('Mensagem enviada com sucesso:', response.data);
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error);

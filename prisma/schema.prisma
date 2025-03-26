@@ -48,7 +48,7 @@ model LogsWhatsApp {
 }
 
 model Message {
-  id           String   @id @default(uuid())
+  id           String   @id
   eventType    String
   remoteJid    String
   pushName     String
